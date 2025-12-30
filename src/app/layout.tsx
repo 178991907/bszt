@@ -7,6 +7,10 @@ export const metadata: Metadata = {
   description: '为姓名生成可打印的笔顺练习字帖',
 };
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
