@@ -108,7 +108,7 @@ var q = V((ze, $) => {
     }
     return e;
   }
-  (function(e) {
+  (function (e) {
     class t extends RegExp {
       constructor(r, a, o, n, i) {
         super(r, a), this.pcrePattern = o, this.pcreFlags = n, this.delimiter = i;
@@ -129,7 +129,7 @@ var X = V((H) => {
   var we = Object.prototype.toString, j = /^[\u0009\u0020-\u007e\u0080-\u00ff]+$/;
   function be(e, t) {
     if (typeof e != "string") throw new TypeError("argument str must be a string");
-    for (var s = {}, r = t || {}, a = r.decode || Pe, o = 0; o < e.length; ) {
+    for (var s = {}, r = t || {}, a = r.decode || Pe, o = 0; o < e.length;) {
       var n = e.indexOf("=", o);
       if (n === -1) break;
       var i = e.indexOf(";", o);
@@ -472,21 +472,25 @@ function ye() {
 }
 async function ve(e) {
   if (e.url.startsWith("blob:")) try {
-    let s = `./__next-on-pages-dist__/assets/${new URL(e.url).pathname}.bin`, r = (await C(s)).default, a = { async arrayBuffer() {
-      return r;
-    }, get body() {
-      return new ReadableStream({ start(o) {
-        let n = Buffer.from(r);
-        o.enqueue(n), o.close();
-      } });
-    }, async text() {
-      return Buffer.from(r).toString();
-    }, async json() {
-      let o = Buffer.from(r);
-      return JSON.stringify(o.toString());
-    }, async blob() {
-      return new Blob(r);
-    } };
+    let s = `./__next-on-pages-dist__/assets/${new URL(e.url).pathname}.bin`, r = (await C(s)).default, a = {
+      async arrayBuffer() {
+        return r;
+      }, get body() {
+        return new ReadableStream({
+          start(o) {
+            let n = Buffer.from(r);
+            o.enqueue(n), o.close();
+          }
+        });
+      }, async text() {
+        return Buffer.from(r).toString();
+      }, async json() {
+        let o = Buffer.from(r);
+        return JSON.stringify(o.toString());
+      }, async blob() {
+        return new Blob(r);
+      }
+    };
     return a.clone = () => ({ ...a }), a;
   } catch {
   }
@@ -697,28 +701,34 @@ globalThis.AbortController = class extends AbortController {
     try {
       super();
     } catch (t) {
-      if (t instanceof Error && t.message.includes("Disallowed operation called within global scope")) return { signal: { aborted: false, reason: null, onabort: () => {
-      }, throwIfAborted: () => {
-      } }, abort() {
-      } };
+      if (t instanceof Error && t.message.includes("Disallowed operation called within global scope")) return {
+        signal: {
+          aborted: false, reason: null, onabort: () => {
+          }, throwIfAborted: () => {
+          }
+        }, abort() {
+        }
+      };
       throw t;
     }
   }
 };
-var Pr = { async fetch(e, t, s) {
-  re(), Q();
-  let r = await __ALSes_PROMISE__;
-  if (!r) {
-    let n = new URL(e.url), i = await t.ASSETS.fetch(`${n.protocol}//${n.host}/cdn-cgi/errors/no-nodejs_compat.html`), c = i.ok ? i.body : "Error: Could not access built-in Node.js modules. Please make sure that your Cloudflare Pages project has the 'nodejs_compat' compatibility flag set.";
-    return new Response(c, { status: 503 });
+var Pr = {
+  async fetch(e, t, s) {
+    re(), Q();
+    let r = await __ALSes_PROMISE__;
+    if (!r) {
+      let n = new URL(e.url), i = t.ASSETS ? await t.ASSETS.fetch(`${n.protocol}//${n.host}/cdn-cgi/errors/no-nodejs_compat.html`) : { ok: false }; c = i.ok ? i.body : "Error: Could not access built-in Node.js modules. Please make sure that your Cloudflare Pages project has the 'nodejs_compat' compatibility flag set.";
+      return new Response(c, { status: 503 });
+    }
+    let { envAsyncLocalStorage: a, requestContextAsyncLocalStorage: o } = r;
+    return a.run({ ...t, NODE_ENV: "production", SUSPENSE_CACHE_URL: w }, async () => o.run({ env: t, ctx: s, cf: e.cf }, async () => {
+      if (new URL(e.url).pathname.startsWith("/_next/image")) return t.ASSETS ? K(e, { buildOutput: f, assetsFetcher: t.ASSETS, imagesConfig: _.images }) : new Response("Image optimization requires Cloudflare Pages (ASSETS binding missing)", { status: 404 });
+      let i = B(e);
+      return ee({ request: i, ctx: s, assetsFetcher: t.ASSETS || { fetch: () => new Response(null, { status: 404 }) } }, _, f, m);
+    }));
   }
-  let { envAsyncLocalStorage: a, requestContextAsyncLocalStorage: o } = r;
-  return a.run({ ...t, NODE_ENV: "production", SUSPENSE_CACHE_URL: w }, async () => o.run({ env: t, ctx: s, cf: e.cf }, async () => {
-    if (new URL(e.url).pathname.startsWith("/_next/image")) return K(e, { buildOutput: f, assetsFetcher: t.ASSETS, imagesConfig: _.images });
-    let i = B(e);
-    return ee({ request: i, ctx: s, assetsFetcher: t.ASSETS }, _, f, m);
-  }));
-} };
+};
 export {
   Pr as default
 };
