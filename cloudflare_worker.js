@@ -718,7 +718,7 @@ var Pr = {
     re(), Q();
     let r = await __ALSes_PROMISE__;
     if (!r) {
-      let n = new URL(e.url), i = t.ASSETS ? await t.ASSETS.fetch(`${n.protocol}//${n.host}/cdn-cgi/errors/no-nodejs_compat.html`) : { ok: false }; c = i.ok ? i.body : "Error: Could not access built-in Node.js modules. Please make sure that your Cloudflare Pages project has the 'nodejs_compat' compatibility flag set.";
+      let n = new URL(e.url), i = t.ASSETS ? await t.ASSETS.fetch(`${n.protocol}//${n.host}/cdn-cgi/errors/no-nodejs_compat.html`) : { ok: false }; let c = i.ok ? i.body : "Error: Could not access built-in Node.js modules. Please make sure that your Cloudflare Pages project has the 'nodejs_compat' compatibility flag set.";
       return new Response(c, { status: 503 });
     }
     let { envAsyncLocalStorage: a, requestContextAsyncLocalStorage: o } = r;
