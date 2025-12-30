@@ -32,7 +32,7 @@ yarn-error.log*
 
 # vercel
 .vercel
-!.vercel/output/static/_worker.js
+
 
 # typescript
 *.tsbuildinfo
